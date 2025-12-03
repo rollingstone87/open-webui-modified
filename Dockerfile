@@ -112,7 +112,24 @@ RUN if [ $UID -ne 0 ]; then \
 
 RUN mkdir -p $HOME/.cache/chroma
 RUN echo -n 00000000-0000-0000-0000-000000000000 > $HOME/.cache/chroma/telemetry_user_id
+# 复制前端构建文件
+COPY --chown=$UID:$GID --from=build /app/build /app/build
+COPY --chown=$UID:$GID --from=build /app/CHANGELOG.md /app/CHANGELOG.md
+COPY --chown=$UID:$GID --from=build /app/package.json /app/package.json
 
+# ===== 在此处插入自定义资源注入代码 =====
+# 复制字体文件（如果您的项目有fonts目录）
+COPY fonts/* /app/build/assets/fonts/
+
+# 复制自定义CSS和JS文件
+COPY custom.css /app/build/assets/
+COPY custom.js /app/build/assets/
+
+# 在index.html中注入引用
+# 不使用CDN的版本：
+RUN sed -i 's|</head>|<link rel="stylesheet" href="assets/custom.css"></head>|' /app/build/index.html && \
+    sed -i 's|</body>|<script src="assets/custom.js"></script></body>|' /app/build/index.html
+    
 # Make sure the user has access to the app and root directory
 RUN chown -R $UID:$GID /app $HOME
 
