@@ -6,7 +6,7 @@
 3. 更改了代码窗的互动方式，参考源：https://linux.do/t/topic/440439
 
 ## 使用方式：
-1. git clone本项目
-2. cd 项目目录
-3. docker build -t image_name .
-4. docker 启动该镜像
+1. git clone https://github.com/rollingstone87/open-webui-modified.git
+2. cd open-webui-modified
+3. docker build -t open-webui-modified .
+4. docker run -d -p 5556:8080 -v open-webui:/app/backend/data --name open-webui-modified open-webui-modified
