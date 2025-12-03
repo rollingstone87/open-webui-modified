@@ -24,6 +24,14 @@ html {
 
 body {
     font-family: 'JinBuTi', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-image: url('http://cache.wasai.chat/bgpic.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.dark body {
+    background-image: url('http://cache.wasai.chat/bgpic.jpg');
 }
 
 /* 代码块容器样式 */
